@@ -1,0 +1,5 @@
+syntax git wajib hafal 
+1. git status (cek file, masih merah atau hijau, kalau merah git add)
+2. git add . (. = semua file)
+3. git commit -m 'isi pesan' (update ke git file dan kirim pesan / -m = message)
+4. git push (upload file ke github / login akun github dulu)
