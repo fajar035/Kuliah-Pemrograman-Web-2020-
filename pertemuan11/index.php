@@ -1,18 +1,11 @@
 <?php
-// Koneksi Database
-$conn = mysqli_connect("localhost", "root", "", "fajar");
+require 'function.php';
+$mahasiswa = query("SELECT * FROM mahasiswa");
 
-// Query isi tabel mahasiswa
-$result = mysqli_query($conn, "SELECT * FROM mahasiswa");
-
-// Ubah data ke dalam array
-$rows = [];
-while ($row = mysqli_fetch_assoc($result)) {
-  $rows[] = $row;
+// ketika tombol cari di tekan
+if (isset($_POST['cari'])) {
+  $mahasiswa = cari($_POST['keyword']);
 }
-
-// Tampung ke variable mahasiswa
-$mahasiswa = $rows;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,32 +26,45 @@ $mahasiswa = $rows;
 
 <body>
   <h3>Daftar Mahasiswa</h3>
+  <a href="tambah.php">Tambah Data Mahasiswa</a>
+  <br><br>
+
+  <form action="" method="POST">
+    <input type="text" name="keyword" placeholder="Masukan keyword pencarian .." autocomplete="off" autofocus size="40">
+    <button type="submit" name="cari">Cari</button>
+  </form>
+
+  <br>
   <table border="1" cellpadding="10" cellspacing="0">
     <tr>
       <th>No</th>
       <th>Gambar</th>
-      <th>NRP</th>
       <th>Nama</th>
-      <th>Email</th>
-      <th>Jurusan</th>
       <th>Aksi</th>
     </tr>
+
+    <?php if (empty($mahasiswa)) : ?>
+      <tr>
+        <td colspan="5">
+          <p style="font-size: 30px; color:red; font-style: italic;">Data Tidak Ditemukan</p>
+        </td>
+      </tr>
+    <?php endif; ?>
+
+
     <?php $nomor = 1; ?>
     <?php foreach ($mahasiswa as $m) : ?>
       <tr>
         <td><?= $nomor; ?></td>
         <td><img src="picture/<?= $m['gambar']; ?>" alt="foto" width="50" height="50"></td>
-        <td><?= $m['nrp']; ?></td>
         <td><?= $m['nama']; ?></td>
-        <td><?= $m['email']; ?></td>
-        <td><?= $m['jurusan']; ?></td>
         <td>
-          <button><a href="#">Edit</a></button>
-          <button><a href="#">Hapus</a></button>
+          <button><a href="detail.php?id=<?= $m['id']; ?>">Lihat Detail</a></button>
+
         </td>
       </tr>
-      <?php $nomor++; ?>
     <?php endforeach; ?>
+    <?php $nomor++; ?>
   </table>
 </body>
 

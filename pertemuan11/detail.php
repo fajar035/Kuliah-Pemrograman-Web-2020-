@@ -2,6 +2,7 @@
 require 'function.php';
 // ambil id di url
 $id = $_GET['id'];
+
 // query data
 $mahasiswa = query("SELECT * FROM mahasiswa WHERE id = '$id'");
 
@@ -26,8 +27,8 @@ $mahasiswa = query("SELECT * FROM mahasiswa WHERE id = '$id'");
     <li>Nama : <?= $mahasiswa['nama']; ?></li>
     <li>Email : <?= $mahasiswa['email']; ?></li>
     <li>Jurusan : <?= $mahasiswa['jurusan']; ?></li>
-    <li><a href="">Ubah</a> | <a href="">Hapus</a></li>
-    <li><a href="latihan3.php">Kembali</a></li>
+    <li><a href="ubah.php?id=<?= $id; ?>">Ubah</a> | <a href="hapus.php?id=<?= $id; ?>" onclick="return confirm('Apakah yakin ingin menghapus?');">Hapus</a></li>
+    <li><a href="index.php">Kembali</a></li>
   </ul>
 
 </body>
